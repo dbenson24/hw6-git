@@ -6,7 +6,7 @@
 
 int main(int argc, char *argv[])
 {
-	string filename;
+	std::string filename;
 	WordList wordlist;
 
 	if (argc == 2) { // if there is a filename on the command line

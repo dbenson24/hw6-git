@@ -13,7 +13,7 @@
 using namespace std;
 
 // read the lyrics from a file
-void read_lyrics(char * filename, bool show_progress );
+void WordList(char * filename, bool show_progress );
 
 // convert a string to lowercase and without punctuation
 string alpha_only(string s);

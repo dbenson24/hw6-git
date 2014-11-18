@@ -8,6 +8,8 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include <vector>
+#include "WordList.h"
 
 using namespace std;
 
@@ -18,7 +20,7 @@ using namespace std;
 //   returns: nothing
 //   does: calls a function each time a word is found
 //
-void read_lyrics(const char * filename, bool show_progress)
+WordList read_lyrics(const char * filename, bool show_progress)
 {
         ifstream in(filename);			// creates an input stream
         int song_count = 0;			// for progress indicator
@@ -27,13 +29,18 @@ void read_lyrics(const char * filename, bool show_progress)
 	// -- While more data to read...
 	while ( ! in.eof() ) 
 	{
+		vector <string> song(100);
+
+
 		// -- First line is the artist
 		getline(in, artist);
 		if (in.fail()) break;
+		song[0] = artist;
 
 		// -- Second line is the title
 		getline(in, title);
 		if (in.fail()) break;
+		song[1] = title;
 
 		if ( show_progress )
 		{
@@ -46,9 +53,11 @@ void read_lyrics(const char * filename, bool show_progress)
 		}
 		// -- Then read all words until we hit the 
 		// -- special <BREAK> token
+		int i = 2;
 		while ( in >> word && word != "<BREAK>" ){
 			//
 			// -- Found a word
+			song[i] = word;
 		}
 		// -- Important: skip the newline left behind
 		in.ignore();
