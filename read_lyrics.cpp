@@ -20,11 +20,12 @@ using namespace std;
 //   returns: nothing
 //   does: calls a function each time a word is found
 //
-WordList read_lyrics(const char * filename, bool show_progress)
+ void read_lyrics(const char * filename, bool show_progress)
 {
         ifstream in(filename);			// creates an input stream
         int song_count = 0;			// for progress indicator
 	string artist, title, word;
+	WordList newList = WordList();
 
 	// -- While more data to read...
 	while ( ! in.eof() ) 
