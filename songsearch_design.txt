@@ -1,0 +1,33 @@
+Derek Benson
+HW 6 Plan
+
+* For this project I am going to use a hashtable and a dynamic array.
+
+* The wordTable is filled with wordNodes and the songTable is filled with
+songNodes, the wordTable is a hashtable that is handling collisions by storing 
+each node that is hashed into a vector at that location. The songTable is a 
+dynamic array that contains songNodes. 
+
+* The wordTable takes an alpha only word and hashes 
+it, the position at the table will then contain the top ten wordNodes for songs 
+sorted by the frequency that word appeared in each song. Each wordNode contains 
+a position on the songTable array where that songNode is contained and the
+frequency that word appeared with in the song. 
+
+* The songTable is full of songNodes that store all of the information about
+the songs. Each songNode has the title, artist, and an array of strings filled 
+with the songs lyrics. 
+
+* How reading in the file works:
+A songNode is created for each song. The lyrics are added one by one to the 
+vector of strings in the songNode. Each word is hashed in alpha only format
+to the wordTable. When a word is added to the wordtable the array of
+WordNodes at each position is sorted so that the top 10 WordNodes are always
+for the songs with the highest frequency of that word.
+
+* How searching for a word works:
+The query is changed to be alpha only and is then hashed on the wordTable.
+The top ten wordNodes for that song are then moved through. The locations of
+songs are pulled from each word node and the lyrics of each song are linearly
+searched for the alpha only word. Every time the alpha only word appears
+it is printed along with the five words in front of and behind it. 

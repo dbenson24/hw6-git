@@ -78,9 +78,9 @@ void WordList::read_lyrics(const char* filename, bool show_progress){
 		in.ignore();
 		// merge the temp hash table into the larger one
 		for (int i = 0; i < song.size(); i++){
-			vector <WordNode> temp = song.atHash(i);
+			HashedWord temp = song.atHash(i);
 			vector <WordNode>::iterator current;
-			for(current = temp.begin(); current != temp.end(); current++){
+			for(current = temp.hashedwordNodes->begin(); current != temp.hashedwordNodes->end(); current++){
 				wordTable->addWordNode(*current);
 			}
 		}
@@ -109,10 +109,9 @@ string WordList::alpha_only(string s){
 void WordList::search(string query){
 	//TODO: Search Function
 	cout << "Searched for " << query << "\n";
-	vector <WordNode> temp = wordTable->findWord(alpha_only(query));
-	cout << temp.at(0).artist;
+	HashedWord temp = wordTable->findWord(alpha_only(query));
 	vector <WordNode>::iterator current;
-	for(current = temp.begin(); current != temp.end(); current++){
+	for(current = temp.hashedwordNodes->begin(); current != temp.hashedwordNodes->end(); current++){
 		printWordGroup(*current);
 	}
 	return;

@@ -11,19 +11,22 @@
 #include <vector>
 #include "WordNode.h"
 #include "hashfunc.h"
-
+struct HashedWord {
+	std::string word;
+	std::vector<WordNode> *hashedwordNodes;
+};
 class WordTable {
 public:
 	WordTable();
 	~WordTable();
 	int addWord(std::string artist, std::string title, std::string word, int location);
 	void addWordNode(WordNode w);
-	std::vector<WordNode> atHash(int hash);
+	HashedWord atHash(int hash);
 	int size();
-	std::vector<WordNode> findWord(std::string word);
+	HashedWord findWord(std::string word);
 
 private:
-	std::vector< std::vector<WordNode> > *wordNodes;
+	std::vector<HashedWord> *wordNodes;
 	int nodecount;
 	double loadFactor();
 	void expand();

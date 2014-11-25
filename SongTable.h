@@ -12,6 +12,11 @@
 #include "SongNode.h"
 #include "hashfunc.h"
 
+struct HashedSong{
+	std::string artisttitle;
+	std::vector<SongNode> *songNodes;
+};
+
 class SongTable {
 public:
 	SongTable();
@@ -20,7 +25,7 @@ public:
 	SongNode  retrieveSong(std::string artist, std::string title);
 
 private:
-	std::vector<std::vector <SongNode> > *songs;
+	std::vector<HashedSong > *songs;
 	int nodecount;
 	double loadFactor();
 	void expand();

@@ -14,7 +14,8 @@ int main(int argc, char *argv[])
 		wordlist.read_lyrics(argv[1],true);
 	}
 	else { // use a pre-defined filename*/
-		filename = "/home/derek/Documents/hw6/hw6-git/rick_db.txt";
+		//filename = "/home/derek/Documents/hw6/hw6-git/rick_db.txt";
+		filename = "/h/dbenso01/hw6/hw6-git/rick_db.txt";
 		//filename = "lyrics_fulldb.txt";
 	        wordlist.read_lyrics(filename.c_str(),true);
 	//}

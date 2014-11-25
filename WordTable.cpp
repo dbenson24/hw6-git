@@ -9,7 +9,7 @@
 using namespace std;
 
 WordTable::WordTable(){
-	wordNodes = new vector< vector<WordNode> >(1, vector<WordNode>(0));
+	wordNodes = new vector< HashedWord >(1);
 	nodecount = 0;
 }
 
@@ -27,14 +27,14 @@ int WordTable::addWord(string artist, string title, string word, int location){
 	//TODO: addWord function should be done
 	uint32_t x = hash_string(word);
 	int hash = (int)x%size();
-	vector<WordNode> temp = wordNodes->at(hash);
-	if (temp.size() == 0){
-		temp.push_back(WordNode(word, artist, title, location));
+	HashedWord temp = wordNodes->at(hash);
+	if (temp.hashedwordNodes->size() == 0){
+		temp.hashedwordNodes->push_back(WordNode(word, artist, title, location));
 		return hash;
 	}
 	else{
-		temp.at(0).count++;
-		temp.at(0).locations.push_back(location);
+		temp.hashedwordNodes->at(0).count++;
+		temp.hashedwordNodes->at(0).locations.push_back(location);
 		return hash;
 	}
 }
@@ -48,18 +48,18 @@ void WordTable::addWordNode (WordNode w){
 	int hash = x%size();
 	if (loadFactor() > .5)
 		expand();
-	wordNodes->at(hash).push_back(w);
+	wordNodes->at(hash).hashedwordNodes->push_back(w);
 }
 
 // atHash
 // This function will retrieve the array of WordNodes at the hash value
 // returns the vector<WordNode> located at the hash.
-vector<WordNode> WordTable::atHash(int hash){
+HashedWord WordTable::atHash(int hash){
 	//TODO: atHash function should be done
 	return wordNodes->at(hash);
 }
 
-vector<WordNode> WordTable::findWord(string word){
+HashedWord WordTable::findWord(string word){
 	//TODO: atHash function should be done
 	uint32_t x = hash_string(word);
 	int hash = x%size();
@@ -75,13 +75,13 @@ double WordTable::loadFactor(){
 }
 
 void WordTable::expand(){
-	vector< vector<WordNode> > *oldTable = wordNodes;
+	vector< HashedWord > *oldTable = wordNodes;
 	int oldSize = size();
-	wordNodes = new vector< vector<WordNode> >(oldSize*2, vector<WordNode>(0));
-	vector< vector<WordNode> >::iterator iter;
+	wordNodes = new vector< HashedWord >(oldSize*2);
+	vector< HashedWord >::iterator iter;
 	for (iter = oldTable->begin(); iter != oldTable->end(); iter++){
 		vector <WordNode>::iterator curr;
-		for (curr = iter->begin(); curr != iter->end(); curr++){
+		for (curr = iter->hashedwordNodes->begin(); curr != iter->hashedwordNodes->end(); curr++){
 			addWordNode(*curr);
 		}
 	}

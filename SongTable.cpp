@@ -11,7 +11,7 @@
 using namespace std;
 
 SongTable::SongTable(){
-	songs = new vector< vector<SongNode> >(1, vector<SongNode>(0));
+	songs = new vector<HashedSong>(1);
 	nodecount = 0;
 }
 
@@ -27,7 +27,7 @@ void SongTable::addSong(SongNode s){
 	int hash = x%size();
 	if (loadFactor() > .5)
 			expand();
-	songs->at(hash).push_back(s);
+	songs->at(hash).songNodes->push_back(s);
 
 }
 // retrieveSong
@@ -40,19 +40,19 @@ SongNode SongTable::retrieveSong(string artist, string title){
 	//TODO: retrieveSong Should be done
 	uint32_t x = hash_string(artist+title);
 	int hash = x%size();
-	vector<SongNode> temp = songs->at(hash);/*
+	HashedSong temp = songs->at(hash);/*
 	vector<SongNode*>::iterator iter;
 	for (iter = temp.begin(); iter != temp.end(); iter++){
 		if (compareNode(*iter, artist, title)){
 			return *iter;
 		}
 	}*/
-	for (int i = 0; i < (int)temp.size(); i++){
-		if (compareNode(temp[i], artist, title)){
+	for (int i = 0; i < (int)temp.songNodes->size(); i++){
+		if (compareNode(temp.songNodes->at(i), artist, title)){
 			cout << artist <<"\n";
 			cout << title << "\n";
-			cout << temp[0].words[0] << "\n";
-			return temp[i];
+			cout << temp.songNodes->at(i).words[i] << "\n";
+			return temp.songNodes->at(i);
 		}
 	}
 }
@@ -66,13 +66,13 @@ double SongTable::loadFactor(){
 }
 
 void SongTable::expand(){
-	vector< vector<SongNode> > *oldTable = songs;
+	vector< HashedSong > *oldTable = songs;
 	int oldSize = size();
-	songs = new vector< vector<SongNode> >(oldSize*2, vector<SongNode>(0));
-	vector< vector<SongNode> >::iterator iter;
+	songs = new vector<HashedSong> (oldSize*2);
+	vector< HashedSong >::iterator iter;
 	for (iter = oldTable->begin(); iter != oldTable->end(); iter++){
 		vector <SongNode>::iterator curr;
-		for (curr = iter->begin(); curr != iter->end(); curr++){
+		for (curr = iter->songNodes->begin(); curr != iter->songNodes->end(); curr++){
 			addSong(*curr);
 		}
 	}
