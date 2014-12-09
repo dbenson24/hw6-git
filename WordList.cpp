@@ -118,12 +118,8 @@ void WordList::search(string query){
 }
 
 void WordList::printWordGroup (WordNode w){
-	int k=0;
 	for (int i = 2; i < (int)songTable->retrieveSong(w.songposition).words.size(); i++){
 		if (w.word == alpha_only(songTable->retrieveSong(w.songposition).words.at(i))){
-			k++;
-			cout << "Number of appearances in this song: " << w.count << "\n";
-			cout << "Current appearance: " << k << "\n";
 			cout << "Song Title: " << songTable->retrieveSong(w.songposition).words.at(1) <<
 					"\nArtist: " << songTable->retrieveSong(w.songposition).words.at(0) << "\nContext: ";
 			for (int x = i-5; x <= i+5; x++){
