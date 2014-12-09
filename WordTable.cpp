@@ -36,8 +36,6 @@ WordTable::~WordTable(){
 // Returns the hashing value of the word for quick access
 int WordTable::addWord(WordNode inserting) {
 	//TODO: addWord function should be done
-	if (inserting.word == "cry")
-		cout << "inserting cry\n";
 	double lf = loadFactor();
 	if (lf > 0.5)
 		expand();
@@ -46,22 +44,12 @@ int WordTable::addWord(WordNode inserting) {
 	bool notInserted = true;
 	while (notInserted){
 		if (wordNodes[hash].word == inserting.word){
-			if (wordNodes[hash].word == "cry"){
-				cout << wordNodes[hash].hashedwordNodes.back().count << "- the count before next insert\n";
-				cout << "The hash being used: " << hash << "\n";
-			}
-			if (wordNodes[hash].hashedwordNodes.size() > 0)
-				/*if (wordNodes[hash].hashedwordNodes.back().songposition != inserting.songposition){
-					wordNodes[hash].hashedwordNodes.push_back(inserting);
-					return hash;
-				}*/
+			if (wordNodes[hash].hashedwordNodes.size() > 0){
 				if (wordNodes[hash].hashedwordNodes.back().songposition==inserting.songposition){
 					wordNodes[hash].hashedwordNodes.back().count++;
-					if (wordNodes[hash].word == "cry"){
-						cout << wordNodes[hash].hashedwordNodes.back().count << "- the count after the insert\n";
-					}
 					return hash;
 				}
+			}
 			if (wordNodes[hash].hashedwordNodes.size() > 10){
 				sortAndDrop(hash);
 			}
@@ -69,8 +57,6 @@ int WordTable::addWord(WordNode inserting) {
 			notInserted=false;
 		} else if (wordNodes[hash].word == "") {
 			wordNodes[hash].word = inserting.word;
-			if (wordNodes[hash].word == "cry")
-				cout << "A new cry node was just created with a count of 1\n";
 			wordNodes[hash].hashedwordNodes.push_back(inserting);
 			nodeCount++;
 			notInserted = false;
@@ -133,7 +119,6 @@ int WordTable::getCount(){
 }
 
 void WordTable::expand(){
-	cout << "expansion started\n";
 	nodeCount = 0;
 	HashedWord *oldTable = wordNodes;
 	int oldCapacity = capacity;
@@ -149,5 +134,4 @@ void WordTable::expand(){
 		}
 	}
 	delete[] oldTable;
-	cout << "expansion finished\n";
 }
