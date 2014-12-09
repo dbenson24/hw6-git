@@ -35,6 +35,6 @@ int main(int argc, char *argv[])
 		}
 	}*/
 	wordlist.search("cry");
-	std::cout << "<END OF REPORT>";
+	std::cout << "<END OF REPORT>\n";
 	return 0;
 }

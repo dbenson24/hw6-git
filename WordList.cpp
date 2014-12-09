@@ -120,7 +120,7 @@ void WordList::search(string query){
 void WordList::printWordGroup (WordNode w){
 	for (int i = 2; i < (int)songTable->retrieveSong(w.songposition).words.size(); i++){
 		if (w.word == alpha_only(songTable->retrieveSong(w.songposition).words.at(i))){
-			cout << "Song Title: " << songTable->retrieveSong(w.songposition).words.at(1) <<
+			cout << "Title: " << songTable->retrieveSong(w.songposition).words.at(1) <<
 					"\nArtist: " << songTable->retrieveSong(w.songposition).words.at(0) << "\nContext: ";
 			for (int x = i-5; x <= i+5; x++){
 				if (x > 1 && x < (int)songTable->retrieveSong(w.songposition).words.size())
