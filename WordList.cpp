@@ -104,7 +104,6 @@ string WordList::alpha_only(string s){
 
 void WordList::search(string query){
 	//TODO: Search Function
-	cout << "Searched for " << query << "\n\n";
 	HashedWord temp = wordTable->findWord(alpha_only(query));
 	if (temp.word == ""){
 		cout << "Word Not Found\n";
