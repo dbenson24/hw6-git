@@ -15,7 +15,7 @@ bool operator<(const WordNode &l, const WordNode &r) {
 }
 
 WordTable::WordTable(){
-	int startingcapacity = 10000000;
+	int startingcapacity = 10;
 	wordNodes = new HashedWord[startingcapacity];
 	nodeCount = 0;
 	capacity = startingcapacity;
