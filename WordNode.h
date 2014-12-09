@@ -18,6 +18,7 @@ public:
 
 	int songposition;
 	std::string word;
+	std::string title;
 	int count;
 
 private:
