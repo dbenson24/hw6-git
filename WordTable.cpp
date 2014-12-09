@@ -15,9 +15,10 @@ bool operator<(const WordNode &l, const WordNode &r) {
 }
 
 WordTable::WordTable(){
-	wordNodes = new HashedWord[10];
+	int startingcapacity = 1000000;
+	wordNodes = new HashedWord[startingcapacity];
 	nodeCount = 0;
-	capacity = 10;
+	capacity = startingcapacity;
 	for (int i = 0; i < capacity; i++){
 		wordNodes[i] = HashedWord();
 	}
@@ -44,12 +45,17 @@ int WordTable::addWord(WordNode inserting) {
 	while (notInserted){
 		if (wordNodes[hash].word == inserting.word){
 			vector<WordNode>::iterator iter;
-			for (iter = wordNodes[hash].hashedwordNodes->begin(); iter != wordNodes[hash].hashedwordNodes->end(); iter++){
+			/*for (iter = wordNodes[hash].hashedwordNodes->begin(); iter != wordNodes[hash].hashedwordNodes->end(); iter++){
 				if (iter->songposition == inserting.songposition){
 					iter->count++;
 					return hash;
 				}
-			}
+			}*/
+			if (wordNodes[hash].hashedwordNodes->size()>0)
+				if (wordNodes[hash].hashedwordNodes->back().songposition==inserting.songposition){
+					wordNodes[hash].hashedwordNodes->back().count++;
+					return hash;
+				}
 			if (wordNodes[hash].hashedwordNodes->size() > 10){
 				sortAndDrop(hash);
 			}
