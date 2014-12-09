@@ -10,18 +10,15 @@
 using namespace std;
 
 WordNode::WordNode(){
-	locations = vector<int> (0);
-	title = "";
-	artist = "";
+	songposition = -1;
+	word = "";
 	count = 0;
 }
 
-WordNode::WordNode(string cword, string cartist, string ctitle, int clocation){
+WordNode::WordNode(string cword, int position){
 	word = cword;
-	artist = cartist;
-	title = ctitle;
 	count = 1;
-	locations.push_back(clocation);
+	songposition = position;
 }
 
 WordNode::~WordNode(){

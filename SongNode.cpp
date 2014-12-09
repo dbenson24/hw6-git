@@ -8,13 +8,13 @@
 using namespace std;
 
 SongNode::SongNode(){
-	words = vector<string> (0);
+	words = new vector<string> (0);
 }
 
 SongNode::~SongNode(){
 }
 
-SongNode::SongNode(vector<string> s){
+SongNode::SongNode(vector<string> *s){
 	words = s;
 }
 

@@ -14,9 +14,9 @@ class SongNode {
 public:
 	SongNode();
 	~SongNode();
-	SongNode(std::vector<std::string>);
+	SongNode(std::vector<std::string> *s);
 
-	std::vector <std::string> words;
+	std::vector<std::string> *words;
 };
 
 

@@ -5,7 +5,7 @@ CXX = clang++
 FLAGS = -Wall -g3
 
 songsearch: hashfunc.cpp hashfunc.h main.cpp SongNode.cpp SongNode.h SongTable.cpp SongTable.h WordList.cpp WordList.h WordNode.cpp WordNode.h WordTable.cpp WordTable.h
-	${CXX} ${FLAGS} -o songsearch hashfunc.cpp main.cpp SongNode.cpp SongTable.cpp WordList.cpp WordNode.cpp WordTable.cpp
+	${CXX} ${FLAGS} -o songsearch hashfunc.cpp hashfunc.h main.cpp SongNode.cpp SongNode.h SongTable.cpp SongTable.h WordList.cpp WordList.h WordNode.cpp WordNode.h WordTable.cpp WordTable.h
 	
 clean:
 	rm -f songsearch

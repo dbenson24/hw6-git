@@ -37,30 +37,27 @@ void WordList::read_lyrics(const char* filename, bool show_progress){
 	// -- While more data to read...
 	while ( ! in.eof() )
 	{
-		vector <string> songWords(10);
-
-		WordTable song = WordTable();
+		SongNode *newSong = new SongNode();
 		// -- First line is the artist
 		getline(in, artist);
 		if (in.fail()) break;
 
 		// stores artist as the first entry in song vector
-		songWords.push_back(artist);
+		newSong->words->push_back(artist);
 
 		// -- Second line is the title
 		getline(in, title);
 		if (in.fail()) break;
 
 		// stores title as the second entry in song vector
-		songWords.push_back(title);
-
+		newSong->words->push_back(title);
+		song_count++;
 		if ( show_progress )
 		{
-			song_count++;
-			if (song_count % 10000 == 0) {
+			if (song_count % 5000 == 0) {
 				cout << "At "       << song_count <<
 						" Artist: " << artist     <<
-						" Title:"   << title << endl;
+						" Title: "   << title << endl;
 			}
 		}
 		// -- Then read all words until we hit the
@@ -70,22 +67,19 @@ void WordList::read_lyrics(const char* filename, bool show_progress){
 			//
 			// -- Found a word
 			//stores word in proper places on vector
-			songWords.push_back(word);
-			song.addWord(artist, title, alpha_only(word), i);
+			newSong->words->push_back(word);
+			WordNode *newnode = new WordNode(alpha_only(word), song_count-1);
+			wordTable->addWord(*newnode);
 			i++;
 		}
 		// -- Important: skip the newline left behind
 		in.ignore();
-		// merge the temp hash table into the larger one
-		for (int i = 0; i < song.size(); i++){
-			HashedWord temp = song.atHash(i);
-			vector <WordNode>::iterator current;
-			for(current = temp.hashedwordNodes->begin(); current != temp.hashedwordNodes->end(); current++){
-				wordTable->addWordNode(*current);
-			}
-		}
-		songTable->addSong(SongNode(songWords));
+
+		songTable->songs->push_back(*newSong);
+		/*if (song_count%1500 == 0)
+		wordTable->sortAndDrop();*/
 	}
+	wordTable->sortAndDrop();
 }
 
 //
@@ -108,24 +102,34 @@ string WordList::alpha_only(string s){
 
 void WordList::search(string query){
 	//TODO: Search Function
-	cout << "Searched for " << query << "\n";
+	cout << "Searched for " << query << "\n\n";
 	HashedWord temp = wordTable->findWord(alpha_only(query));
-	vector <WordNode>::iterator current;
-	for(current = temp.hashedwordNodes->begin(); current != temp.hashedwordNodes->end(); current++){
-		printWordGroup(*current);
+	if (temp.word == ""){
+		cout << "Word Not Found\n";
 	}
-	return;
+	else{
+		vector<WordNode>::iterator iter;
+		for (iter = temp.hashedwordNodes->begin(); iter != temp.hashedwordNodes->end(); iter++){
+			printWordGroup(*iter);
+		}
+	}
 }
 
 void WordList::printWordGroup (WordNode w){
-	SongNode temp = songTable->retrieveSong(w.artist, w.title);
-	cout << "Artist: " << w.artist <<"\nSong Title: " << w.title <<"\n";
-	vector <int>::iterator iter;
-	for (iter = w.locations.begin(); iter != w.locations.end(); iter++){
-		for (int i = *iter-5; i < *iter+5; i++){
-			if (i > 2 && i < (int)temp.words.capacity())
-				cout << temp.words[i] << " ";
+	for (int i = 2; i < (int)songTable->retrieveSong(w.songposition).words->size(); i++){
+		if (w.word == alpha_only(songTable->retrieveSong(w.songposition).words->at(i))){
+			cout << "Number of appearances in this song: " << w.count << "\n";
+			cout << "Song Title: " << songTable->retrieveSong(w.songposition).words->at(1) <<
+					"\nArtist: " << songTable->retrieveSong(w.songposition).words->at(0) << "\nContext: ";
+			for (int x = i-5; x <= i+5; x++){
+				if (x > 1 && x < (int)songTable->retrieveSong(w.songposition).words->size())
+					cout << songTable->retrieveSong(w.songposition).words->at(x) << " ";
+			}
+			cout << "\n\n";
 		}
-		cout << "\n";
 	}
+}
+
+void WordList::printAllSongs(){
+
 }

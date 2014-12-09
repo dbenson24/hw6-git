@@ -13,12 +13,10 @@
 class WordNode {
 public:
 	WordNode();
-	WordNode(std::string word, std::string cartist, std::string ctitle, int clocations);
+	WordNode(std::string word, int position);
 	~WordNode();
 
-	std::vector<int> locations;
-	std::string title;
-	std::string artist;
+	int songposition;
 	std::string word;
 	int count;
 
