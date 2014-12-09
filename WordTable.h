@@ -14,9 +14,11 @@
 
 struct HashedWord {
 	std::string word;
-	std::vector<WordNode> *hashedwordNodes;
-	HashedWord() {word = ""; hashedwordNodes = new std::vector<WordNode>(0); }
-//	~HashedWord() {delete hashedwordNodes;};
+	std::vector<WordNode> hashedwordNodes;
+	HashedWord() {word = ""; hashedwordNodes = std::vector<WordNode>(0); }
+	~HashedWord() {//hashedwordNodes->clear();
+		//delete hashedwordNodes;
+	}
 };
 
 class WordTable {

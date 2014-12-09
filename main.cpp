@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
 	}
 	else { // use a pre-defined filename*/
 	filename = "/home/derek/Documents/text_dbs/rick_db.txt";
+	//filename = "/home/derek/Documents/text_dbs/count.txt";
 	//filename = "/home/derek/Documents/text_dbs/2316Songs.txt";
 	//filename = "/home/derek/Documents/text_dbs/13300Songs.txt";
 	//filename = "/home/derek/Documents/text_dbs/lyrics_fulldb.txt";
@@ -33,7 +34,7 @@ int main(int argc, char *argv[])
 			wordlist.search(query);
 		}
 	}*/
-	wordlist.search("i");
+	wordlist.search("cry");
 	std::cout << "<END OF REPORT>";
 	return 0;
 }

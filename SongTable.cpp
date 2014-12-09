@@ -16,6 +16,8 @@ SongTable::SongTable(){
 }
 
 SongTable::~SongTable(){
+	songs->clear();
+	delete songs;
 }
 
 // retrieveSong

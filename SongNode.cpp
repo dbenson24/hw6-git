@@ -8,13 +8,15 @@
 using namespace std;
 
 SongNode::SongNode(){
-	words = new vector<string> (0);
+	words = vector<string> (0);
 }
 
-SongNode::~SongNode(){
-}
-
-SongNode::SongNode(vector<string> *s){
+SongNode::SongNode(vector<string> s){
 	words = s;
 }
 
+SongNode::~SongNode(){
+	//delete words;
+	//words->clear();
+	//delete words;
+}

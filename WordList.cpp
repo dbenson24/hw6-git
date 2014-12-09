@@ -20,6 +20,8 @@ WordList::WordList(){
 }
 
 WordList::~WordList(){
+	delete wordTable;
+	delete songTable;
 }
 //
 // read_lyics
@@ -32,25 +34,24 @@ void WordList::read_lyrics(const char* filename, bool show_progress){
 	ifstream in(filename);			// creates an input stream
 	int song_count = 0;			// for progress indicator
 	string artist, title, word;
-	WordList newList = WordList();
 
 	// -- While more data to read...
 	while ( ! in.eof() )
 	{
-		SongNode *newSong = new SongNode();
+		SongNode newSong = SongNode();
 		// -- First line is the artist
 		getline(in, artist);
 		if (in.fail()) break;
 
 		// stores artist as the first entry in song vector
-		newSong->words->push_back(artist);
+		newSong.words.push_back(artist);
 
 		// -- Second line is the title
 		getline(in, title);
 		if (in.fail()) break;
 
 		// stores title as the second entry in song vector
-		newSong->words->push_back(title);
+		newSong.words.push_back(title);
 		song_count++;
 		if ( show_progress )
 		{
@@ -67,15 +68,16 @@ void WordList::read_lyrics(const char* filename, bool show_progress){
 			//
 			// -- Found a word
 			//stores word in proper places on vector
-			newSong->words->push_back(word);
-			WordNode *newnode = new WordNode(alpha_only(word), song_count-1);
-			wordTable->addWord(*newnode);
+			newSong.words.push_back(word);
+			WordNode newnode = WordNode(alpha_only(word), song_count-1);
+			wordTable->addWord(newnode);
+
 			i++;
 		}
 		// -- Important: skip the newline left behind
 		in.ignore();
 
-		songTable->songs->push_back(*newSong);
+		songTable->songs->push_back(newSong);
 		/*if (song_count%1500 == 0)
 		wordTable->sortAndDrop();*/
 	}
@@ -109,7 +111,7 @@ void WordList::search(string query){
 	}
 	else{
 		vector<WordNode>::iterator iter;
-		for (iter = temp.hashedwordNodes->begin(); iter != temp.hashedwordNodes->end(); iter++){
+		for (iter = temp.hashedwordNodes.begin(); iter != temp.hashedwordNodes.end(); iter++){
 			printWordGroup(*iter);
 		}
 	}
@@ -117,16 +119,16 @@ void WordList::search(string query){
 
 void WordList::printWordGroup (WordNode w){
 	int k=0;
-	for (int i = 2; i < (int)songTable->retrieveSong(w.songposition).words->size(); i++){
-		if (w.word == alpha_only(songTable->retrieveSong(w.songposition).words->at(i))){
+	for (int i = 2; i < (int)songTable->retrieveSong(w.songposition).words.size(); i++){
+		if (w.word == alpha_only(songTable->retrieveSong(w.songposition).words.at(i))){
 			k++;
 			cout << "Number of appearances in this song: " << w.count << "\n";
 			cout << "Current appearance: " << k << "\n";
-			cout << "Song Title: " << songTable->retrieveSong(w.songposition).words->at(1) <<
-					"\nArtist: " << songTable->retrieveSong(w.songposition).words->at(0) << "\nContext: ";
+			cout << "Song Title: " << songTable->retrieveSong(w.songposition).words.at(1) <<
+					"\nArtist: " << songTable->retrieveSong(w.songposition).words.at(0) << "\nContext: ";
 			for (int x = i-5; x <= i+5; x++){
-				if (x > 1 && x < (int)songTable->retrieveSong(w.songposition).words->size())
-					cout << songTable->retrieveSong(w.songposition).words->at(x) << " ";
+				if (x > 1 && x < (int)songTable->retrieveSong(w.songposition).words.size())
+					cout << songTable->retrieveSong(w.songposition).words.at(x) << " ";
 			}
 			cout << "\n\n";
 		}

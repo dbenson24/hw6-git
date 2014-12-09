@@ -15,7 +15,7 @@ bool operator<(const WordNode &l, const WordNode &r) {
 }
 
 WordTable::WordTable(){
-	int startingcapacity = 1000000;
+	int startingcapacity = 1;
 	wordNodes = new HashedWord[startingcapacity];
 	nodeCount = 0;
 	capacity = startingcapacity;
@@ -25,7 +25,7 @@ WordTable::WordTable(){
 }
 
 WordTable::~WordTable(){
-	delete wordNodes;
+	delete[] wordNodes;
 }
 
 // addWord
@@ -44,25 +44,18 @@ int WordTable::addWord(WordNode inserting) {
 	bool notInserted = true;
 	while (notInserted){
 		if (wordNodes[hash].word == inserting.word){
-			vector<WordNode>::iterator iter;
-			/*for (iter = wordNodes[hash].hashedwordNodes->begin(); iter != wordNodes[hash].hashedwordNodes->end(); iter++){
-				if (iter->songposition == inserting.songposition){
-					iter->count++;
+			if (wordNodes[hash].hashedwordNodes.size() > 0)
+				if (wordNodes[hash].hashedwordNodes.back().songposition==inserting.songposition){
+					wordNodes[hash].hashedwordNodes.back().count++;
 					return hash;
 				}
-			}*/
-			if (wordNodes[hash].hashedwordNodes->size()>0)
-				if (wordNodes[hash].hashedwordNodes->back().songposition==inserting.songposition){
-					wordNodes[hash].hashedwordNodes->back().count++;
-					return hash;
-				}
-			if (wordNodes[hash].hashedwordNodes->size() > 10){
+			if (wordNodes[hash].hashedwordNodes.size() > 10){
 				sortAndDrop(hash);
 			}
-			wordNodes[hash].hashedwordNodes->push_back(inserting);
+			wordNodes[hash].hashedwordNodes.push_back(inserting);
 		} else if (wordNodes[hash].word == "") {
 			wordNodes[hash].word = inserting.word;
-			wordNodes[hash].hashedwordNodes->push_back(inserting);
+			wordNodes[hash].hashedwordNodes.push_back(inserting);
 			nodeCount++;
 			notInserted = false;
 		}
@@ -76,17 +69,17 @@ int WordTable::addWord(WordNode inserting) {
 void WordTable::sortAndDrop(){
 	for (int i = 0; i < capacity; i++){
 		if (wordNodes[i].word != ""){
-			sort(wordNodes[i].hashedwordNodes->begin(), wordNodes[i].hashedwordNodes->end());
-			if (wordNodes[i].hashedwordNodes->size() > 10)
-				wordNodes[i].hashedwordNodes->erase(wordNodes[i].hashedwordNodes->begin()+10, wordNodes[i].hashedwordNodes->end());
+			sort(wordNodes[i].hashedwordNodes.begin(), wordNodes[i].hashedwordNodes.end());
+			if (wordNodes[i].hashedwordNodes.size() > 10)
+				wordNodes[i].hashedwordNodes.erase(wordNodes[i].hashedwordNodes.begin()+10, wordNodes[i].hashedwordNodes.end());
 		}
 	}
 }
 
 void WordTable::sortAndDrop(int i){
-	sort(wordNodes[i].hashedwordNodes->begin(), wordNodes[i].hashedwordNodes->end());
-	if (wordNodes[i].hashedwordNodes->size() > 10)
-		wordNodes[i].hashedwordNodes->erase(wordNodes[i].hashedwordNodes->begin()+10, wordNodes[i].hashedwordNodes->end());
+	sort(wordNodes[i].hashedwordNodes.begin(), wordNodes[i].hashedwordNodes.end());
+	if (wordNodes[i].hashedwordNodes.size() > 10)
+		wordNodes[i].hashedwordNodes.erase(wordNodes[i].hashedwordNodes.begin()+10, wordNodes[i].hashedwordNodes.end());
 
 }
 // atHash
@@ -132,11 +125,11 @@ void WordTable::expand(){
 	for (int i = 0; i < oldCapacity; i++){
 		if (oldTable[i].word != ""){
 			vector <WordNode>::iterator curr;
-			for (curr = oldTable[i].hashedwordNodes->begin(); curr != oldTable[i].hashedwordNodes->end(); curr++){
+			for (curr = oldTable[i].hashedwordNodes.begin(); curr != oldTable[i].hashedwordNodes.end(); curr++){
 				if (curr->word != "")
 					addWord(*curr);
 			}
 		}
 	}
-	//	delete oldTable;
+	delete[] oldTable;
 }
