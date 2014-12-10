@@ -102,34 +102,67 @@ string WordList::alpha_only(string s){
 	return ss.str();
 }
 
+//
+// search
+//   purpose: to search lyrics database for a word
+//			  and print out the occurrences of it for
+//			  its top ten songs.
+//   arguments: a string
+//   returns: nothing
+//   does: prints all occurrences of the string for the
+//	       top ten songs associated with it.
+//
 void WordList::search(string query){
-	//TODO: Search Function
 	HashedWord temp = wordTable->findWord(alpha_only(query));
+	// If the HashedWord equals its default, the word was not found
 	if (temp.word == ""){
 		cout << "Word Not Found\n";
 	}
+	// Otherwise the word was found
 	else{
 		vector<WordNode>::iterator iter;
-		for (iter = temp.hashedwordNodes.begin(); iter != temp.hashedwordNodes.end(); iter++){
+		// Prints the 10 words around each occurrence of the
+		// query for the top ten songs
+		for (iter = temp.hashedItems.begin();
+				iter != temp.hashedItems.end(); iter++){
 			printWordGroup(*iter);
 		}
 	}
 }
 
+//
+// printWordGroup
+//   purpose: print properly formatted context for a word node
+//   arguments: a WordNode
+//   returns: nothing
+//   does: prints all occurrences of the word in the word node
+//		   for the top ten songs associated with it.
+//
 void WordList::printWordGroup (WordNode w){
-	for (int i = 2; i < (int)songTable->retrieveSong(w.songposition).words.size(); i++){
-		if (w.word == alpha_only(songTable->retrieveSong(w.songposition).words.at(i))){
-			cout << "Title: " << songTable->retrieveSong(w.songposition).words.at(1) <<
-					"\nArtist: " << songTable->retrieveSong(w.songposition).words.at(0) << "\nContext: ";
+	// Moves through every word in the song
+	for (int i = 2;
+			i < (int)songTable->retrieveSong(w.songposition).words.size();
+			i++){
+		// If the current word equals the WordNode word
+		if (w.word == alpha_only
+				(songTable->retrieveSong(w.songposition).words.at(i))){
+			// Print the Title Artist and the Context
+			cout << "Title: " << songTable->retrieveSong
+					(w.songposition).words.at(1) << "\nArtist: " <<
+					songTable->retrieveSong(w.songposition).words.at(0)
+					<< "\nContext: ";
+			// Context is found by locating the 5 words on either side,
+			// minus words that extend beyond the beginning and end of the
+			// lyrics.
 			for (int x = i-5; x <= i+5; x++){
-				if (x > 1 && x < (int)songTable->retrieveSong(w.songposition).words.size())
-					cout << songTable->retrieveSong(w.songposition).words.at(x) << " ";
+				if (x > 1 && x < (int)songTable->retrieveSong
+						(w.songposition).words.size()){
+					cout << songTable->retrieveSong
+							(w.songposition).words.at(x) << " ";
+				}
 			}
 			cout << "\n\n";
 		}
 	}
 }
 
-void WordList::printAllSongs(){
-
-}

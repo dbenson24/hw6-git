@@ -16,7 +16,4 @@ SongNode::SongNode(vector<string> s){
 }
 
 SongNode::~SongNode(){
-	//delete words;
-	//words->clear();
-	//delete words;
 }

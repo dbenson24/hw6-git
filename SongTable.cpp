@@ -20,15 +20,18 @@ SongTable::~SongTable(){
 	delete songs;
 }
 
+//
 // retrieveSong
-// Hashes an artist and title and then finds it's vector <string>
-// Returns a vector <string> containing the words of the song,
-// the first two elements of the artist then the song title. Lyrics
-// start at the 3rd position.
-// Takes a string for the artist and a string for the title.
+//   purpose: to return the SongNode at a given index
+//   arguments: an int
+//   returns: a SongNode
+//   does: return the SongNode at the index given
+//
 SongNode SongTable::retrieveSong(int i){
-	//TODO: retrieveSong
-	return songs->at(i);
+	if (i < songs->size())
+		return songs->at(i);
+	else
+		return songs->back();
 }
 
 

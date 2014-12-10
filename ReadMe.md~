@@ -10,10 +10,6 @@ alpha only version of any words typed into it. Entering <BREAK> will
 cause the program to terminate.
 
 main.cpp 
-    Defines the main class. It chooses a txt file to read in
-    based on whether there is one present on the command line.
-    It then creates the database and prompts the user for
-    search queries.
 
 hashfunc.cpp 
     Defines the hashfunc class. Used to hash a string.
@@ -56,42 +52,49 @@ WordNode.h
     all of the methods and variables defined in WordNode.cpp.
 
 WordTable.cpp 
-    Defines the WordTable class. Used to create a hashtable
-    of hashedItems that contain WordNodes to each the top ten
-    songs for each word.
+    Defines the sort2 class. Used to perform a shell sort on an
+    arraywithlength.
 
 WordTable.h
-    This is the header file for the WordTable class. It declares
-    all of the methods and variables defined in WordTable.cpp.
+    This is the header file for the sort2 class. It declares
+    all of the methods and variables defined in sort2.cpp.
 
-This program will compile with the included MakeFile.
+Every assignment you submit you will include a ReadMe file. The name
+could be ReadMe, readme, Read-me.txt, readME, ReadMe.md (the “.md”
+stands for “markdown,” which allows lightweight formatting) or almost
+anything you like that has the word read followed by the word me. Exact
+spelling is not important, the contents are.
 
+The purpose of the ReadMe file is the same as the little paper insert
+you get in a new appliance -- to give the reader an introduction and
+overview of the product.
 
-This program uses two main datastructures to complete it's tasks.
+Your ReadMe file for the assignments **must** include:
 
-A WordTable stores all of the words in a hashtable using linear probing.
-The WordTable is made of structs of HashedWords that contain vectors of 
-WordNodes which hold the word and their respective songs position on the
-SongTable.
-A SongTable stores all of the songs into its dynamic array of SongNodes.
-Each SongNode contains a dynamic array of strings that hold the lyrics,
-the artist, and the title.
+1.  The purpose of your program
 
+2.  List of files with one/or two-line summary
 
-How reading in the file works:
+3.  How to compile it (saying "use included Makefile" is ok)
 
-A songNode is created for each song. The lyrics are added one by one to the 
-vector of strings in the songNode. Each word is hashed in alpha only format
-to the wordTable. When a word is added to the wordtable, the array of
-WordNodes at each position is sorted so that the top 10 WordNodes are always
-for the songs with the highest frequency of that word.
+4.  Outline of data structure (depending on the assignment)
 
-How searching for a word works:
+5.  Outline of algorithm (depending on the assignment)
 
-The query is changed to be alpha only and is then hashed on the wordTable.
-The top ten wordNodes for that song are then moved through. The locations of
-songs are pulled from each word node and the lyrics of each song are linearly
-searched for the alpha only word. Every time the alpha only word appears
-it is printed along with the five words in front of and behind it.
+6.  A list of people who materially helped you on the assignment. If
+    you worked with a friend and you shared ideas, you need to 
+    list that person, e.g., "Josh Whedon helped me on this assignment".
+    You do not need to list TAs, or professors, but you may feel free
+    to do so.
 
+The ReadMe file shows the reader, in a quick glance, what the program is
+about and gives a general idea of how it works. For short programs the
+readme file will be short, for more complicated programs the readme file
+will be longer.
+
+Use outline form rather than long discursive paragraphs. A ReadMe file
+is an overview.
+
+There is no correct readme format; within these guidelines, devise your
+own style.
 

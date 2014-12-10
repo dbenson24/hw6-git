@@ -14,8 +14,8 @@
 
 struct HashedWord {
 	std::string word;
-	std::vector<WordNode> hashedwordNodes;
-	HashedWord() {word = ""; hashedwordNodes = std::vector<WordNode>(0); }
+	std::vector<WordNode> hashedItems;
+	HashedWord() {word = ""; hashedItems = std::vector<WordNode>(0); }
 };
 
 class WordTable {
@@ -23,10 +23,6 @@ public:
 	WordTable();
 	~WordTable();
 	int addWord(WordNode inserting);
-	int getCapacity();
-	int getCount();
-	//	void addWordNode(WordNode w);
-	HashedWord atHash(int hash);
 	HashedWord findWord(std::string word);
 	void sortAndDrop();
 	void sortAndDrop(int i);

@@ -18,7 +18,6 @@ public:
 
 	void search(std::string query);
 	void read_lyrics(const char* filename, bool show_progress);
-	void printAllSongs();
 
 private:
 	WordTable *wordTable;
